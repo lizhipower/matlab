@@ -12,16 +12,11 @@ b_status(1) = 1;
 
 [b_status_totaltime,b_status_time, b_status] = cal_sys_time(lambda,mu,b_status,sys_time);
 
-% ele_status_time = [ a_status_time; b_status_time];
-% ele_status = [a_status; b_status]
-% status_time.a = a_status_time;
-% status_time.b = b_status_time;
+status_time = {a_status_time, b_status_time};
 
-% status.a = a_status;
-% status.b = b_status;
+status = {a_status, b_status};
 
-
-[sys_status_time ,sys_status]= get_sys_status_time(a_status_time, a_status, b_status_time, b_status, sys_time)
+[sys_status_time ,sys_status]= get_sysN_status_time(status_time, status, sys_time)
 
 sys_status_dec = sys_status(:,1) .* 2 + sys_status(:,2)
 % sys_status_totaltime =
