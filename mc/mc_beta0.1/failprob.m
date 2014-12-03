@@ -1,18 +1,28 @@
 %% output数据含义
 %probline——线路不可用率
 %probgen——机组不可用率
+%probbr——断路器不可用率
+%probtr——变压器不可用率
 %lamline——线路故障率
 %lamgen——机组故障率
+%lambr——断路器故障率
+%lamtr——变压器故障率
 %miuline——线路修复率
 %miugen——机组修复率
+%miubbr——断路器修复率
+%miutr——变压器修复率\
 
-function [probline,probgen,lamline,lamgen,miuline,miugen]=failprob10(cas)
 
-if cas==1 %读RTS79
-    [dur,lamline,genmttr,genmttf]=failrate;
-else %% 从failrate函数中读取RBTS的原始数据
-    [dur,lamline,genmttr,genmttf]=failrateRBTS;
-end
+%ksrv---服务器故障率系数
+%ksw---交换机故障率系数
+%kli---通信线路故障率系数
+%kied---IED故障率
+
+
+function [probline,probgen]=failprob
+
+[dur,lamline,genmttr,genmttf]=failrate;
+
 %% 根据t的变化，对lamline作出倍增性修改
 % [week,day,hour]=exacttimefun(t);
 % hour=(week-1)*7*24+(day-1)*24+hour;
@@ -41,7 +51,6 @@ else
   %  miugenp(1,i)=8760/mttrp;
    % lamgenp(1,i)=8760/(8760-mttrp);
     miugen=8760./genmttr;
-    miugen(find(isinf(miugen)))=0;
     lamgen=8760./genmttf;
   %  fenzi=lamgen(1,i)*miugenp(1,i)+lamgenp(1,i)*miugen(1,i);
   %  fenmu=fenzi+miugen(1,i)*miugenp(1,i);
@@ -60,47 +69,3 @@ end
 %probgen(1,4)=0;   
 %probgen(1,5)=0;   
 %probgen(1,15)=0;   
-
-%% 故障率参数调整
-
-% lamline=lamline*0.8;%-->数据文件夹3
-%  afile_flag=3;
-% lamline=lamline*0.9;%-->数据文件夹4
-%  afile_flag=4;
-% lamline=lamline*1.1;%-->数据文件夹5
-% afile_flag=5;
-% lamline=lamline*1.2;%-->数据文件夹6
-%  afile_flag=6;
-% lamline=lamline*1.3;%-->数据文件夹7
-%  afile_flag=7;
-% lamline=lamline*1.4;%-->数据文件夹8
-%  afile_flag=8;
-% lamline=lamline*1.5;%-->数据文件夹9
-%  afile_flag=9;
- lamline=lamline*1.6;%-->数据文件夹10
-%  afile_flag=10;
-% lamline=lamline*1.7;%-->数据文件夹11
-%  afile_flag=11;
-
-
-%   lamgen=lamgen*0.8;%-->数据文件夹12
-%  afile_flag=12;
-%   lamgen=lamgen*0.9;%-->数据文件夹13
-%  afile_flag=13;
-%   lamgen=lamgen*1.1;%-->数据文件夹14
-%  afile_flag=14;
-%   lamgen=lamgen*1.2;%-->数据文件夹15
-%  afile_flag=15;
-%   lamgen=lamgen*1.3;%-->数据文件夹16
-%  afile_flag=16;
-%   lamgen=lamgen*1.4;%-->数据文件夹17
-%  afile_flag=17;
-%   lamgen=lamgen*1.5;%-->数据文件夹18
-%  afile_flag=18;
-%   lamgen=lamgen*1.5;%-->数据文件夹19
-%  afile_flag=19;
-%   lamgen=lamgen*1.5;%-->数据文件夹20
-%  afile_flag=20;
-
-
-

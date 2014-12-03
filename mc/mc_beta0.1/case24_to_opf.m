@@ -11,7 +11,7 @@ function mpc = case24_to_opf;
 
 %% dataformat
 %% bus data
-%     1       2     3   4   5   6     7    8   9   10     11   12    13     
+%     1       2     3   4   5   6     7    8   9   10     11   12    13
 %	bus_i	type	Pd	Qd	Gs	Bs	area   Vm  Va baseKV zone Vmax	Vmin
 %% generator data
 %    1    2   3    4     5      6     7       8      9       10     11   12  13
@@ -53,7 +53,7 @@ for i=1:j
    else
        gen_add(i,:)= mpc.gen(a,:);
    end
-   
+
 end
 
     gen_add(:,1)=bus_temp(:,1);
@@ -82,13 +82,13 @@ end
 for i=1:n
     mpc.gencost(i,5)= 0;
     mpc.gencost(i,6)= 0;
-    mpc.gencost(i,7)= 0; 
+    mpc.gencost(i,7)= 0;
 end
 
 for i=n+1:m
     mpc.gencost(i,5)= 0;
     mpc.gencost(i,6)= 1;
-    mpc.gencost(i,7)= 0; 
+    mpc.gencost(i,7)= 0;
 end
 
 
