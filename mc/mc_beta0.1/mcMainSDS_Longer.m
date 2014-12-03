@@ -19,21 +19,6 @@
 %% branch data
 %     1       2     3   4   5     6       7       8       9       10     11        12    13
 %   fbus    tbus    r   x   b   rateA   rateB   rateC   ratio   angle   status  angmin  angmax
-
-
-% 选择计算模式：
-% 1 序贯
-% 2 伪序贯
-method = input('choose the mode\n1: SDS \n2: TIS\n');
-if method == 1
-    disp('SDS runing...')
-elseif method == 2
-    disp('TIS running..');
-else
-    disp('Wrong choice, the program is exited.');
-    return
-end
-
 %确定该系统中各类元件的个数
 
 mpc=loadcase('case24_ieee_rts');
@@ -76,22 +61,10 @@ N=10;
 
 
  for j=1:N
-    status_repeat(j) = 0;
+    % status_repeat(j) = 0;
     tic %计时开始,每一年仿真的时间
     % 利用直接序贯蒙特卡洛方法进行系统状态抽样
-
-
-    %抽取状态
-    if method == 1
-        % 序贯
-        [t_system, status_system] = mcyear;
-    elseif method == 2
-        % 伪序贯抽样
-        [t_system, status_system] = mcyear;
-        [t_system, status_system] = doTIS(t_system, status_system);
-    end
-
-
+    [t_system, status_system] = mcyear;%抽取状态
 
     n(j)=length(t_system);%一个仿真时间段内的系统状态数（这个有头有尾的，实际状态数为n-1）
 
@@ -117,17 +90,17 @@ N=10;
 
         % 进行可靠性指标的求解
             % 进行状态搜索
-        search_result = status_search(status_system,status_system(:,i));
-        if search_result < i
-            % 表示状态重复
-            loadcut(i) = loadcut(search_result);
-            status_repeat(j) = status_repeat(j) + 1 ;
-        else
+        % search_result = status_search(status_system,status_system(:,i));
+        % if search_result < i
+        %     % 表示状态重复
+        %     loadcut(i) = loadcut(search_result);
+        %     status_repeat(j) = status_repeat(j) + 1 ;
+        % else
             % 表示是全新状态
             mpopt = mpoption( 'VERBOSE', 0, 'OUT_ALL', 0);
             results = runopf(mpc,mpopt);
             loadcut(i) = p_load + results.f;%切负荷量
-        end
+        % end
 
         if(loadcut(i) < 1) %去抖动
             loadcut(i) = 0;

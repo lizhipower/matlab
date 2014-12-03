@@ -1,3 +1,7 @@
 clc;
 clear('all');
-mcMain;
+
+mcMainSDS;
+time1 = time;
+mcMainTIS;
+time2 = time;
