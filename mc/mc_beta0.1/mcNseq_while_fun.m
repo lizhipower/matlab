@@ -1,27 +1,5 @@
-%本程序对IEEE RTS79系统进行评估
-% 利用间接序贯蒙特卡洛方法进行系统状态抽样
-%可靠性指标选取：
-%电力不足概率――LOLP
-%年停电功率期望值――EPNS
-
-%表示所采用的蒙特卡洛方法，间接
-% amethod=2920;
-%% dataformat
-%% bus data
-%     1       2     3   4   5   6     7    8   9   10     11   12    13
-%   bus_i   type    Pd  Qd  Gs  Bs  area   Vm  Va baseKV zone Vmax  Vmin
-%% generator data
-%    1    2   3    4     5      6     7       8      9       10     11   12  13
-%   bus   Pg  Qg  Qmax  Qmin    Vg  mBase   status  Pmax    Pmin    Pc1 Pc2 Qc1min  Qc1max  Qc2min  Qc2max  ramp_agc    ramp_10 ramp_30 ramp_q  apf %   Unit Code
-%% generator cost data
-%   1   startup shutdown    n   x1  y1  ... xn  yn
-%   2   startup shutdown    n   c(n-1)  ... c0
-%% branch data
-%     1       2     3   4   5     6       7       8       9       10     11        12    13
-%   fbus    tbus    r   x   b   rateA   rateB   rateC   ratio   angle   status  angmin  angmax
-
-    clear('all');
-    clc
+function[cal_cost, lop_rslt, j] =   mcNseq_while_fun (K, spaceGround, spaceCell) 
+   
     mpc=loadcase('case24_ieee_rts');
     n_bus=length(mpc.bus);
     n_branch=length(mpc.branch);
@@ -116,7 +94,6 @@
         disp(sprintf('stage %d of %d, loading...\n',j,N ));
 
         for i = 1 : n(j)
-
             dagger_status_system = cal_dagger(rand(1,ele_num) , dagger_num ,K*probsystem);
 
             F_lolp_dagger = zeros(1, dagger_num);
@@ -233,34 +210,24 @@
     end
 
     % 检查结果
-    subplot(3,1,1);
-    bar(beta_LOLP);
-    xlabel('beta\_LOLP');
-    xlim([0 j-1]);
+    % subplot(3,1,1);
+    % bar(beta_LOLP);
+    % xlabel('beta\_LOLP');
+    % xlim([0 j-1]);
 
-    subplot(3,1,2);
-    bar(LOLP);
-    xlabel('LOLP');
-    xlim([0 j-1]);
-    % % subplot(3,1,2);
-    % % ylim([0.09,0.13]);
-    % % hold on;
-    % % plot(LOLP);
-    % % subplot(4,1,3);
-    % % bar(beta_K);
-    % % xlabel('beta\_K');
+    % subplot(3,1,2);
+    % bar(LOLP);
+    % xlabel('LOLP');
+    % xlim([0 j-1]);
 
-    subplot(3,1,3);
-    bar(time);
-    xlabel('time');
-    xlim([0 j-1]);
-    % % subplot(3,1,3)
-    % % ylim([0.03 0.06]);
+    % subplot(3,1,3);
+    % bar(time);
+    % xlabel('time');
+    % xlim([0 j-1]);
+
 
     clc;
-    cal_cost = time(j-1)
+    cal_cost = time(j-1);
+    lop_rslt = LOLP(j-1);
     disp('it is OK!');
-    % stairs(t_system(1,2:532),loadcut);
-% end
-
-
+     % clear('all')

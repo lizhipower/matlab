@@ -1,19 +1,8 @@
 
-[lolp1 beta1] = mcNSeq_for(1);
-% [lolp2 beta2] = mcNSeq_for(2);
-[lolp4 beta4] = mcNSeq_for(4);
+ [t, l, j] = mcNseq_while_fun(1.6765, 0 , 10000)
+[t1, l1, j1] = mcNseq_while_fun(1.67, 0 , 1)
 
-subplot(2,1,1);
-bar(lolp1,'g');
-hold on;
-bar(lolp2,'b');
-hold on;
-bar(lolp4,'r');
-hold off;
-subplot(2,1,2);
-bar(beta1,'g');
-hold on;
-bar(beta2,'b');
-hold on;
-bar(beta4,'r');
-hold off;
+[t24, l24, j24] = mcNseq_while_fun(1.53, 1 , 4)
+[t5, l5, j5] = mcNseq_while_fun(1.6765, 4 , 10000)
+
+

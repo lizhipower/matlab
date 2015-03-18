@@ -140,6 +140,15 @@
             % 进行可靠性指标的求解
             % 进行状态搜索
             search_result = status_search(status_system_rom,status_system);
+
+            error_rank_result = error_rank(status_system);
+
+            % if error_rank_result <= 1
+            % if error_rank_result <= 1 || error_rank_result > 5
+            % if error_rank_result <= 4
+            %     continue
+            % end
+
             if search_result < i
                 % 表示状态重复
                 loadcut(i) = loadcut(search_result);
