@@ -1,9 +1,9 @@
-function testof33()
-global bus branch
+function [bus, branch] = testof33()
+% global bus branch
 
 %% bus 
 % 节点号 电压幅值 相角 注入有功 注入无功 节点类型
-bus_0 = bus;
+% bus_0 = bus;
 bus=[                                      
    1   12.66  0.0   -0      -0          3  ; 
    2   12.66  0.0   -100    -60         1  ; 

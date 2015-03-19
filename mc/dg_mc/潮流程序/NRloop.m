@@ -1,4 +1,3 @@
-
 %Newton-Raphsonµü´ú(½Å±¾)
 %% output:tempbus branch_temp Sij Sji DS flow 
 %%
@@ -123,9 +122,9 @@ for i = 2:nb
     Pload_total = Pload_total + tempbus(i,4);
     Qload_total = Qload_total + tempbus(i,5);
 end
-Pload_total = Pload_total
-Qload_total = Qload_total
-V = [tempbus(1,4),tempbus(1,5),V]
+Pload_total = Pload_total;
+Qload_total = Qload_total;
+V = [tempbus(1,4),tempbus(1,5),V];
 
 for i=1:nl
     for k=1:2
@@ -191,6 +190,3 @@ flow=[branchS(:,1),branchS(:,2),branchS(:,8:10)];
 %end
 
 %disp('end of while')
-
-
-

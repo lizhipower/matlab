@@ -1,11 +1,7 @@
-function [DS,V] = powerflow()
-global bus branch
-testof33();
-bus_temp = bus;
-branch_temp = branch;
-%bus_temp(:,[4,5])= bus_temp(:,[4,5])*1.6;
-OP = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0];
-%OP = [1,1,1,1,1,1,0,1,0,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,0,1];
+function [DS,V] = powerflow(OP)
+    %bus_temp(:,[4,5])= bus_temp(:,[4,5])*1.6;
+% OP = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0];
+% OP = [1,1,1,1,1,1,0,1,0,1,1,1,1,0,1,1,1,1,0,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,0,1];
 %% 断开7、9、14、37、32
 %OP = [1,1,1,1,1,1,0,1,0,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,0];
 %% 断开7、9、14、28、32
@@ -60,15 +56,24 @@ OP = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0]
 %OP = [1,1,1,1,1,1,0,1,1,1,0,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,0,1,1,1,1,1];
 %OP = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0];
 %%
-ii = 1;
+
+global bus branch
+testof33();
+bus_temp = bus;
+branch_temp = branch;
+
+% ii = 1;
 for i = 1:37
-    if OP(i) == 1
-        branch_new(ii,:) = branch_temp(i,:);
-        ii = ii+1;
+    % if OP(i) == 1
+    if OP(i) == 0
+        % branch_new(ii,:) = branch_temp(i,:);
+        branch_temp(i , 3) = 10000;
+        % ii = ii+1;
     end
 end
-branch_temp = branch_new;
+% branch_temp = branch_new;
 
+% statusMC(branch_temp);
 %% 节点重新编号
 %节点的顺序：平衡节点、PQ节点、PV节点
 [bus_temp,branch_temp,nodenum] = reordering(bus_temp,branch_temp);
@@ -76,7 +81,7 @@ branch_temp = branch_new;
 %% 形成节点导纳矩阵
 Ybus = admittance_matrix(bus_temp,branch_temp);
 NRloop;
-DS
+% DS
 V_min = V(3);
 V_max = V(3);
 for i = 3:35
@@ -87,8 +92,8 @@ for i = 3:35
         V_max = V(i);
     end
 end
-V_min
-V_max
+V_min;
+V_max;
 
 end
 
