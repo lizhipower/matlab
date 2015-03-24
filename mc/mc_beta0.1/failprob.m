@@ -61,6 +61,8 @@ else
 %    probgen(1,i)=fenzi/fenmu;
 
 end
+
+
 %% 
 %probline(1,3)=0;
 %probline(1,8)=0;

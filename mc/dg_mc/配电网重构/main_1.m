@@ -13,8 +13,11 @@ round5=[25 26 27 28 29 30 31 32 36 17 16 15 34 8 7 6];%16
 %% 
 %tic;
 %testof33();
-[init_HM,init_OPL] = initial(100,5);
-[ Best_HM,Best_OPL,Best_HF,Best_V_amplitude] = HS( bus_temp,init_HM,init_OPL,100,5);
+disp('initial');
+[init_HM,init_OPL] = initial(15,5);
+
+disp('HS');
+[ Best_HM,Best_OPL,Best_HF,Best_V_amplitude] = HS( bus_temp,init_HM,init_OPL,15,5);
 %toc;
 minPloss = Best_HF
 BestVamplitude = Best_V_amplitude;

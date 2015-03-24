@@ -13,6 +13,8 @@
 
 %% 生成新和声
 init;
+
+
 Ran_Solution = duan_kai;
 HarmonyIndex = fix(rand(1,Dim)*HMS)+1;
 Harmony = diag(HM(HarmonyIndex,1:Dim))';
