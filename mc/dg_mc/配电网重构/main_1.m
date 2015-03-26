@@ -1,4 +1,4 @@
-function [minPloss,BestVamplitude,Network_structure,BestHM] = main_1(bus_temp)
+function [minPloss,BestVamplitude,Network_structure,BestHM, OPL, HF, DSrslt, MCrslt] = main_1(bus_temp)
 %函数功能：不考虑任何DG并网以及无功优化时的重构
 %clear;
 %clc;
@@ -17,12 +17,12 @@ disp('initial');
 [init_HM,init_OPL] = initial(15,5);
 
 disp('HS');
-[ Best_HM,Best_OPL,Best_HF,Best_V_amplitude] = HS( bus_temp,init_HM,init_OPL,15,5);
+[ Best_HM ,Best_OPL, Best_HF, Best_V_amplitude, OPL, HF, DSrslt, MCrslt] = HS( bus_temp,init_HM,init_OPL,15,5);
 %toc;
-minPloss = Best_HF
+minPloss = Best_HF;
 BestVamplitude = Best_V_amplitude;
 Network_structure = Best_OPL;
-BestHM = Best_HM
+BestHM = Best_HM;
 
 
 
