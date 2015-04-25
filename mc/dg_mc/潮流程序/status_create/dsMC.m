@@ -1,5 +1,6 @@
 %% statusMC: function description
-function[loadRslt] = dsMC(OP, bus)
+function[loadRslt cdfPLoad] = dsMC(OP, bus)
+    disp('3');
         OPlength = length(OP);
         statusOP = zeros(1, OPlength);
         zeroPosition = find(OP == 0);
@@ -16,7 +17,7 @@ function[loadRslt] = dsMC(OP, bus)
         tempOP = OP;
         tempOP(tempOP==0)=[];
 
-        yearLoop = 100;
+        yearLoop = 1000
 
         PLoad = zeros(1, yearLoop);
         QLoad = zeros(1, yearLoop);
@@ -30,9 +31,11 @@ function[loadRslt] = dsMC(OP, bus)
         beta_QLOAD = zeros(1, yearLoop);
 
         timecost = zeros(1, yearLoop);
-
+        % maxPload = 0;
+        % cdfPLoad = zeros(1 ,7);
+        cdfPLoad = [];
         for  k = 1 : yearLoop
-            tic;
+            % tic;
             if mod(k, yearLoop/10) == 0
                 disp('loading...');
                 disp(k/yearLoop);
@@ -46,6 +49,9 @@ function[loadRslt] = dsMC(OP, bus)
 
             % PLoad = 0;
             % QLoad = 0;
+
+            % per malfunction
+
             for j = 1 : loopLength - 1
                  tempOP = status_system(:, j)';
 
@@ -73,7 +79,7 @@ function[loadRslt] = dsMC(OP, bus)
 
                  % cal the NRloop of the OP
 
-                 [DS, V] = powerflow(statusOP);
+                 [DS, V] = powerflow(bus, statusOP);
 
                  % check the V of OP to find the error load num
 
@@ -83,6 +89,41 @@ function[loadRslt] = dsMC(OP, bus)
                  %sum the load of all the error num load
                  totalPLoad = sum(errorLoadNum' .* busPLoad) * (t_system(j+1)-t_system(j));
                  totalQLoad = sum(errorLoadNum' .* busQLoad) * (t_system(j+1)-t_system(j));
+
+                 % if maxPload < abs(totalPLoad)
+                 %     maxPload = abs(totalPLoad)
+                 % end
+                 absPLoad = abs(totalPLoad);
+                 cdfPLoad = [cdfPLoad absPLoad ];
+                %  if absPLoad > 0 && absPLoad < 0.0001
+                %     cdfPLoad(1, 1) = cdfPLoad(1, 1)  + 1;
+                % % elseif absPLoad < 0.005
+                % %     cdfPLoad(1, 2) = cdfPLoad(1, 2)  + 1;
+                % elseif absPLoad < 0.001
+                %     cdfPLoad(1, 2) = cdfPLoad(1, 2) + 1;
+                % % elseif absPLoad < 0.05
+                % %     cdfPLoad(1, 4) = cdfPLoad(1, 4) + 1;
+                % elseif absPLoad < 0.01
+                %     cdfPLoad(1, 3) = cdfPLoad(1,3) + 1;
+                % % elseif absPLoad < 0.5
+                % %     cdfPLoad(1, 6) = cdfPLoad(1,6) + 1;
+                % elseif absPLoad < 0.1
+                %     cdfPLoad(1, 4) = cdfPLoad(1,4) + 1;
+                % % elseif absPLoad < 5
+                % %     cdfPLoad(1, 8) = cdfPLoad(1,8) + 1;
+                % elseif absPLoad < 1
+                %     cdfPLoad(1, 5) = cdfPLoad(1,5) + 1;
+                % elseif absPLoad < 10
+                %     cdfPLoad(1, 6) = cdfPLoad(1,6) + 1;
+                % else
+                %     cdfPLoad(1, 7) = cdfPLoad(1,7) + 1;
+                % end
+                        
+
+                    
+
+
+
                  sumPLoad = sumPLoad + abs(totalPLoad);
                  sumQLoad = sumQLoad + abs(totalQLoad);
             end
@@ -109,5 +150,5 @@ function[loadRslt] = dsMC(OP, bus)
         end
 
          % time(yearLoop)
-         loadRslt = PLOAD(yearLoop);
+         loadRslt = PLOAD(yearLoop) * 1e4;
          % bar(PLOAD)

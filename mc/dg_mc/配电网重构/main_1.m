@@ -1,10 +1,11 @@
-function [minPloss,BestVamplitude,Network_structure,BestHM, OPL, HF, DSrslt, MCrslt] = main_1(bus_temp)
-%函数功能：不考虑任何DG并网以及无功优化时的重构
+% function [minPloss,BestVamplitude,Network_structure,BestHM, OPL, HF, DSrslt, MCrslt] = main_1(bus_temp)
+function [ HF, HM, OPL] = main_1(bus_temp)
+%潞炉脢媒鹿娄脛脺拢潞虏禄驴录脗脟脠脦潞脦DG虏垄脥酶脪脭录掳脦脼鹿娄脫脜禄炉脢卤碌脛脰脴鹿鹿
 %clear;
 %clc;
 %tic;
 global bus branch round1 round2 round3 round4 round5
-%% 各个环中所包含的开关
+%% 赂梅赂枚禄路脰脨脣霉掳眉潞卢碌脛驴陋鹿脴
 round1=[2 3 4 5 6 7 33 20 19 18];%10
 round2=[8 9 10 11 35 21 33];%7
 round3=[34 14 13 12 11 10 9];%7
@@ -17,12 +18,12 @@ disp('initial');
 [init_HM,init_OPL] = initial(15,5);
 
 disp('HS');
-[ Best_HM ,Best_OPL, Best_HF, Best_V_amplitude, OPL, HF, DSrslt, MCrslt] = HS( bus_temp,init_HM,init_OPL,15,5);
+[ HF, HM, OPL] = HS( bus_temp,init_HM,init_OPL,15,5);
 %toc;
-minPloss = Best_HF;
-BestVamplitude = Best_V_amplitude;
-Network_structure = Best_OPL;
-BestHM = Best_HM;
+% minPloss = Best_HF;
+% BestVamplitude = Best_V_amplitude;
+% Network_structure = Best_OPL;
+% BestHM = Best_HM;
 
 
 
