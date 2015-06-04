@@ -7,7 +7,7 @@ function [ OP_Index DS_min  V] = minPF( OP,circle  )
     for i = 1 : length(circle)
         OP_temp = OP;
         OP_temp( circle(i) )  = 0;
-        [DS, V] = powerflow(bus, OP_temp);
+        [DS, V] = powerflow(OP_temp);
       
         V_Rslt = [V_Rslt min(V(4:end))];
         % DS

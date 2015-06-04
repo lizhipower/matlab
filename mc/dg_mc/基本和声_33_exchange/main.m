@@ -16,6 +16,7 @@ tic
 % common34 = [];
 % common35 = [34];
 % common45 = [25,26,27,28];
+clear
 clc
 global bus branch
 testof33();
@@ -29,7 +30,7 @@ r(5).round = [22 23 24 37 28 27 26 25 5 4 3];
 OP = ones(1, length(branch(:, 1) ) );
 OP(33:37) = 0;
 OP_open = 33:37;
-[ds v] = powerflow(bus, OP);
+[ds v] = powerflow(OP);
 DS = [ real( ds)];
 V  = [min(v(3:end))];
 INDEX = [OP_open];

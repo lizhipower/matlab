@@ -1,3 +1,6 @@
+clear;
+clc;
+
 global bus branch
 
 a = 1 ;
