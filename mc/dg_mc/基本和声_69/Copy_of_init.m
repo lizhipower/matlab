@@ -12,9 +12,9 @@
 
 common12 = [69];
 common13 = [];
-common14 = [9,10, 52,53,54,55,56,57,58];
-common15 = [4,5,6,7,8];
-% common15 = [4,6,7,8];
+common14 = [9,10];
+% common15 = [4,5,6,7,8];
+common15 = [4,6,7,8];
 
 common23 = [13,14];
 common24 = [11,12];
@@ -102,9 +102,7 @@ x = length(round4).*rand(1);
 y4 = round4(ceil(x));
 duan_kai(4) = y4;
 INIT(y4) = 0;
-
-
-% 取第五个环路的断开开关
+%% 取第五个环路的断开开关
 judge1 = 0;
 judge2 = 0;
 judge3 = 0;

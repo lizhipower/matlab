@@ -12,7 +12,16 @@ init_HM = ones(HMS,Dim);
 init_OPL = [];
 %Ploss=zeros(1,HMS);
 for i = 1:HMS
-    init;
+    while 1
+        init;
+        if any(duan_kai == 5) == 1 
+            break
+        end
+    end
+    
+    % duan_kai
+    % INIT
+
     init_HM(i,:) = duan_kai;
     init_OPL(i,:) = INIT;
 

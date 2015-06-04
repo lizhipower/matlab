@@ -1,5 +1,5 @@
-function [ Best_HM,Best_OPL,Best_HF,Best_V_amplitude, HM, HF, OPL] = HS(bus_temp, init_HM,init_OPL,HMS,Dim)
-global bus branch round1 round2 round3 round4 round5
+function [ Best_HM,Best_OPL,Best_HF,Best_V_amplitude, HM, HF, OPL,HMfirst,HFfirst] = HS(bus_temp, init_HM,init_OPL,HMS,Dim)
+global bus branch round1 round2 round3 round4 round5 round6 round7 round8 round9 round10 round11 round12 round13 round14 round15
 %% Êý¾Ý
 %round1=[2 3 4 5 6 7 33 20 19 18];%10
 %round2=[8 9 10 11 35 21 33];%7
@@ -15,32 +15,24 @@ HMCR_min = 0.65;
 PAR_max = 0.55;   %Òôµ÷Î¢µ÷¸ÅÂÊ»ò¾Ö²¿ÈÅ¶¯¸ÅÂÊ
 PAR_min = 0.25;
 bw = 1;
-MaxItr = 2000;
+MaxItr = 600;
 [nb,mb] = size(bus);
 
 %% ³õÊ¼»¯
 HM = init_HM;
 OPL = init_OPL;
-
 HF = zeros(HMS,1);
-
 V_amplitude = zeros(HMS,nb+2);
 for i = 1:HMS
-    % OPL(i,:)
     [DS,V] = powerflow(bus_temp,OPL(i,:));
-
-    HF(i,:) = real(DS) ;
-    % length(M')
-    % pause
-
+    HF(i,:) = real(DS);
     V_amplitude(i,:) = V;
-
-     % HF(i,:)
 end
 
-% HMfirst = HM;
-% HFfirst = HF;
+HMfirst = HM;
+HFfirst = HF;
 % pause
+
 %%
 for Itr = 1:MaxItr
     disp(Itr / MaxItr);
@@ -52,14 +44,9 @@ for Itr = 1:MaxItr
     HarmonyIndex = zeros(1,Dim);
     Harmony = zeros(1,Dim);
     Ran_Solution = zeros(1,Dim);
-    % while ( sum(M < 1) < length(M) )
-        GenerateNewHarmony;
-        [DS,V] = powerflow(bus_temp,New_OPL);
-        % sum(M < 1) 
-    % end
-    
+    GenerateNewHarmony;
+    [DS,V] = powerflow(bus_temp,New_OPL);
     New_HF = real(DS);
-
     New_V = V;
     [WorstFit,WorstLoc] = max(HF);
     if New_HF < WorstFit

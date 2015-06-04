@@ -7,24 +7,16 @@ global bus branch round1 round2 round3 round4 round5
 %     common24 common25 common34 common35 common45 
 
 %%
-s = length(branch(:,1));
+s = 37;
 init_HM = ones(HMS,Dim);
 init_OPL = [];
 %Ploss=zeros(1,HMS);
 for i = 1:HMS
-    % while 1
-    %     init;
-    %             disp('Text0');
-
-    %     if INIT(58) == 0
-    %             disp('Text1');
-
-    %             init_HM(i,:) = duan_kai;
-    %             init_OPL(i,:) = INIT;
-    %             break
-    %     end
-    % end
     init;
+    
+    % duan_kai
+    % INIT
+
     init_HM(i,:) = duan_kai;
     init_OPL(i,:) = INIT;
 

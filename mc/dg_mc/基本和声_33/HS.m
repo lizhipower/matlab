@@ -15,7 +15,7 @@ HMCR_min = 0.65;
 PAR_max = 0.55;   %Òôµ÷Î¢µ÷¸ÅÂÊ»ò¾Ö²¿ÈÅ¶¯¸ÅÂÊ
 PAR_min = 0.25;
 bw = 1;
-MaxItr = 200;
+MaxItr = 600;
 [nb,mb] = size(bus);
 
 %% ³õÊ¼»¯
@@ -56,8 +56,7 @@ for Itr = 1:MaxItr
         V_amplitude(WorstLoc,:) = New_V;
     end
 end
-HM
-HF
+
 % pause
 
 %% ¶Ô×îºó½á¹û½øÐÐÅÅÐò

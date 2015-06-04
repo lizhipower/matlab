@@ -13,19 +13,19 @@
 common12 = [69];
 common13 = [];
 common14 = [9,10, 52,53,54,55,56,57,58];
-common15 = [4,5,6,7,8];
+% common15 = [4,5,6,7,8];
 % common15 = [4,6,7,8];
 
 common23 = [13,14];
 common24 = [11,12];
-common25 = [];
+% common25 = [];
 common34 = [70];
-common35 = [];
-common45 = [52,53,54,55,56,57,58];
+% common35 = [];
+% common45 = [52,53,54,55,56,57,58];
 
 %%
 s = length(branch(: ,1 ));
-dim = 5;
+dim = 4;
 m = dim;
 INIT = ones(1,s);
 duan_kai = zeros(1,dim);
@@ -104,45 +104,45 @@ duan_kai(4) = y4;
 INIT(y4) = 0;
 
 
-% 取第五个环路的断开开关
-judge1 = 0;
-judge2 = 0;
-judge3 = 0;
-judge4 = 0;
-for kk = 1:length(common15)
-    if common15(kk) == y1
-       judge1 = 1;
-       round5 = setdiff(round5,common15);
-       break
-    end
-end
-for kk = 1:length(common25)
-    if common25(kk) == y2
-        judge2 = 1;
-        round5 = setdiff(round5,common25);
-        break
-    end
-end
-for kk = 1:length(common35)
-    if common35(kk) == y3
-        judge3 = 1;
-        round5 = setdiff(round5,common35);
-        break
-    end
-end
-for kk = 1:length(common45)
-    if common45(kk) == y4
-        judge4 = 1;
-        round5 = setdiff(round5,common45);
-        break
-    end
-end
+%% 取第五个环路的断开开关
+% judge1 = 0;
+% judge2 = 0;
+% judge3 = 0;
+% judge4 = 0;
+% for kk = 1:length(common15)
+%     if common15(kk) == y1
+%        judge1 = 1;
+%        round5 = setdiff(round5,common15);
+%        break
+%     end
+% end
+% for kk = 1:length(common25)
+%     if common25(kk) == y2
+%         judge2 = 1;
+%         round5 = setdiff(round5,common25);
+%         break
+%     end
+% end
+% for kk = 1:length(common35)
+%     if common35(kk) == y3
+%         judge3 = 1;
+%         round5 = setdiff(round5,common35);
+%         break
+%     end
+% end
+% for kk = 1:length(common45)
+%     if common45(kk) == y4
+%         judge4 = 1;
+%         round5 = setdiff(round5,common45);
+%         break
+%     end
+% end
 
 
-x = length(round5).*rand(1);
-y5 = round5(ceil(x));
-duan_kai(5) = y5;
-INIT(y5) = 0;
+% x = length(round5).*rand(1);
+% y5 = round5(ceil(x));
+% duan_kai(5) = y5;
+% INIT(y5) = 0;
 
             
             

@@ -12,15 +12,12 @@
 %round5=[25 26 27 28 29 30 31 32 36 17 16 15 34 8 7 6];%16
 
 %% Éú³ÉÐÂºÍÉù
-% while 1
-%     init;
-%     if INIT(58) == 0
-%             disp('Text2');
-%             Ran_Solution = duan_kai;
-%             break
-%     end
-% end
-init;
+while 1
+    init;
+    if any(duan_kai == 5) == 1
+         break
+    end
+end
 Ran_Solution = duan_kai;
 HarmonyIndex = fix(rand(1,Dim)*HMS)+1;
 Harmony = diag(HM(HarmonyIndex,1:Dim))';
@@ -40,7 +37,7 @@ end
 Harmony_Tubian = diag(HM(HarmonyIndex_1,1:Dim))';
 
 NewHarmony = CMMask .* Harmony + PAMask.* Harmony_Tubian + NHMask.* Ran_Solution;
-New_OPL = ones(1,length(branch(: , 1)));
+New_OPL = ones(1,37);
 New_HF = 0;
 New_V = [];
 for kk = 1:Dim

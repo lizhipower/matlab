@@ -15,7 +15,7 @@ HMCR_min = 0.65;
 PAR_max = 0.55;   %Òôµ÷Î¢µ÷¸ÅÂÊ»ò¾Ö²¿ÈÅ¶¯¸ÅÂÊ
 PAR_min = 0.25;
 bw = 1;
-MaxItr = 2000;
+MaxItr = 300;
 [nb,mb] = size(bus);
 
 %% ³õÊ¼»¯

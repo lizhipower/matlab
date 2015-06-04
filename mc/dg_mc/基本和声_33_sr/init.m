@@ -10,25 +10,22 @@
 %round4=[22 23 24 37 28 27 26 25 5 4 3];%11
 %round5=[25 26 27 28 29 30 31 32 36 17 16 15 34 8 7 6];%16
 
-common12 = [69];
+common12 = [33];
 common13 = [];
-common14 = [9,10, 52,53,54,55,56,57,58];
-common15 = [4,5,6,7,8];
-% common15 = [4,6,7,8];
-
-common23 = [13,14];
-common24 = [11,12];
-common25 = [];
-common34 = [70];
-common35 = [];
-common45 = [52,53,54,55,56,57,58];
+common14 = [3,4,5];
+common15 = [6,7];
+common23 = [9,10,11];
+common24 = [];
+common25 = [8];
+common34 = [];
+common35 = [34];
+common45 = [25,26,27,28];
 
 %%
-s = length(branch(: ,1 ));
-dim = 5;
-m = dim;
+s = 37;
+m = 5;
 INIT = ones(1,s);
-duan_kai = zeros(1,dim);
+duan_kai = zeros(1,5);
 
 %% 取第一个环路的断开开关
 x = length(round1).*rand(1);
@@ -44,7 +41,16 @@ for kk = 1:length(common12)
         break
     end
 end
-
+% if judge == 0
+%     j = 1;
+%     while (j <= length(round2))
+%         if round2(j) == y1
+%             round2 = [round2(1:j-1) round2(j+1:end)];
+%             break
+%         end
+%         j = j+1;
+%     end
+% end
 x = length(round2).*rand(1);
 y2 = round2(ceil(x));
 duan_kai(2) = y2;
@@ -66,7 +72,26 @@ for kk = 1:length(common23)
         break
     end
 end
-
+% if judge1 == 0
+%     j = 1;
+%     while(j <= length(round3))
+%        if round3(j) == y1
+%            round3 = [round3(1:j-1) round3(j+1:end)];
+%            break
+%        end
+%        j = j+1;
+%     end
+% end
+% if judge2 == 0
+%     j = 1;
+%     while(j <= length(round3))
+%         if round3(j) == y2
+%             round3 = [round3(1:j-1) round3(j+1:end)];
+%             break
+%         end
+%         j = j+1;
+%     end
+% end
 x = length(round3).*rand(1);
 y3 = round3(ceil(x));
 duan_kai(3) = y3;
@@ -96,15 +121,41 @@ for kk = 1:length(common34)
         break
     end
 end
-
-
+% if judge1 == 0
+%     j = 1;
+%     while(j<=length(round4))
+%         if round4(j) == y1
+%             round4 = [round4(1:j-1) round4(j+1:end)];
+%             break
+%         end
+%         j = j+1;
+%     end
+% end
+% if judge2 == 0
+%     j = j+1;
+%     while (j <= length(round4))
+%         if round4(j) == y2
+%             round4 = [round4(1:j-1) round4(j+1:end)];
+%             break
+%         end
+%         j = j+1;
+%     end
+% end
+% if judge3 == 0
+%     j = 1;
+%     while (j <= length(round4))
+%         if round4(j) == y3
+%             round4 = [round4(1:j-1) round(j+1:end)];
+%             break
+%         end
+%         j = j+1;
+%     end
+% end
 x = length(round4).*rand(1);
 y4 = round4(ceil(x));
 duan_kai(4) = y4;
 INIT(y4) = 0;
-
-
-% 取第五个环路的断开开关
+%% 取第五个环路的断开开关
 judge1 = 0;
 judge2 = 0;
 judge3 = 0;
@@ -137,8 +188,46 @@ for kk = 1:length(common45)
         break
     end
 end
-
-
+% if judge1 == 0
+%     j = 1;
+%     while(j<=length(round5))
+%         if round5(j) == y1
+%             round5 = [round5(1:j-1) round5(j+1:end)];
+%             break
+%         end
+%         j = j+1;
+%     end
+% end
+% if judge2 == 0
+%     j = 1;
+%     while (j <= length(round5))
+%         if round5(j) == y2
+%             round5 = [round5(1:j-1) round5(j+1:end)];
+%             break
+%         end
+%         j = j+1;
+%     end
+% end
+% if judge3 == 0
+%     j = 1;
+%     while (j <= length(round5))
+%         if round5(j) == y3
+%             round5 = [round5(1:j-1) round5(j+1:end)];
+%             break
+%         end
+%         j = j+1;
+%     end
+% end
+% if judge4 == 0
+%     j = 1;
+%     while (j <= length(round5))
+%         if round5(j) == y4
+%             round5 = [round5(1:j-1) round5(j+1:end)];
+%             break
+%         end
+%         j = j+1;
+%     end
+% end
 x = length(round5).*rand(1);
 y5 = round5(ceil(x));
 duan_kai(5) = y5;
