@@ -65,7 +65,11 @@ DSij=S(:,3);
 DS = 0;
 for i=1:nl
     li=branch_temp(i,1);
+    li =find(bus_temp(:, 1) == li);
+
     lj=branch_temp(i,2);
+    lj =find(bus_temp(:, 1) == lj);
+
     K=branch_temp(i,7);
     Zt=branch_temp(i,3)+j*branch_temp(i,4);
     if li~=0&lj~=0
@@ -92,6 +96,9 @@ for i=1:nl
         DSij(i)=Sij(i)+Sji(i);
     else        %½ÓµØÏßÂ·
         Iij=V(li)*Ym;
+        V(li)
+        conj(Iij)
+
         Sij(i)=V(li)*conj(Iij);
         Sji(i)=0;
         DSij(i)=Sij(i)+Sji(i);
@@ -104,32 +111,43 @@ branchS=[branch_temp,S];
 
 %% -----------------------------------------------------------
 %ÏÂÃæ°Ñ½ÚµãË³Ðò»¹Ô­ÎªÔ­À´µÄ×´Ì¬
-for i=1:nb
+tempbus = [];
+for i=1: length(BUS(: , 1))
+    tempbus(i, :) = BUS(i , :);
+    tempbus(i, 2: 4) = 0;   
     for k=1:nb
-        if nodenum(k,2)==i
-            tempbus(i,:)=bus_temp(k,:);
+        if nodenum(k , 2) == i
+            tempbus(i, :) = bus_temp(k,:);
         end
     end
 end
-tempbus(:,3)=tempbus(:,3).*(180/pi);    %±ä»»Îª½Ç¶È
-tempbus(:,1)=[1:nb]';
+tempbus(:,3)=tempbus(:,3).*(180/pi);
+tempbus(:,1)=[1: length(BUS(: ,1))]';
 V = [];
-for i = 1:nb
+for i = 1: length(tempbus(: , 1))
     V(i) = tempbus(i,2);
 end
+
 tempbus(1,4)*10000;
+
 V = [tempbus(1,4),tempbus(1,5),V];
 
-for i=1:nl
+for i=1: nl
     for k=1:2
         if branchS(i,k)~=0
             branchS(i,k)=nodenum(branchS(i,k),2);
         end
     end
 end
-branch_temp=branchS(:,1:7);
-flow=[branchS(:,1),branchS(:,2),branchS(:,8:10)];
-
+branch_temp = BRANCH;
+for i = 1 : length(BRANCH)
+    flow(i, :) = [BRANCH(i, 1), BRANCH(i, 2), [0 0 0]];
+    for k = 1 : length(branchS(: ,1))
+        if (BRANCH(i, 1) == branchS(k,1)) & (BRANCH(i, 2) == branchS(k,2) )
+            flow(i, :)=[branchS(k,1),branchS(k,2),branchS(k,8:10)];
+        end
+    end
+end
 
 %% Ñ°ÕÒCapacitorºÍESSµÄ½ÓÈëÎ»ÖÃ
 %LSF_P = zeros(1,33);

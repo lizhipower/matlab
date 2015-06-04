@@ -21,7 +21,6 @@ function [ isolated ] = findIsolated( T )
         % isolatedAreaEnd(i)
         isolatedChildren = union(isolatedChildren, getAreaLoop(T, isolatedAreaEnd(i)));
     end
-    isolatedChildren
     isolated = union(isolatedPoint, isolatedAreaEnd);
     isolated = union(isolated, isolatedChildren);
 
@@ -30,11 +29,11 @@ end
 function [isolatedChildren] = getAreaLoop(T, nodeNum)
     isolatedChildren = [];
     while 1
-        disp('find parentNodeLists');
-        parentNodeLists = findParent(T, nodeNum)
-        isolatedChildren = union(isolatedChildren, parentNodeLists)
+        % disp('find parentNodeLists');
+        parentNodeLists = findParent(T, nodeNum);
+        isolatedChildren = union(isolatedChildren, parentNodeLists);
         if (checkRootPoint(T, parentNodeLists) == 1)
-            disp('root found');
+            % disp('root found');
             break
         else
             for i = 1 : length(parentNodeLists)
