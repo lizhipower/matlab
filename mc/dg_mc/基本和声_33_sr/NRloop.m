@@ -112,10 +112,11 @@ branchS=[branch_temp,S];
 %% -----------------------------------------------------------
 %ÏÂÃæ°Ñ½ÚµãË³Ðò»¹Ô­ÎªÔ­À´µÄ×´Ì¬
 tempbus = [];
-for i=1: length(BUS(: , 1))
-    tempbus(i, :) = BUS(i , :);
-    tempbus(i, 2: 4) = 0;   
-    for k=1:nb
+
+    tempbus = BUS;
+    tempbus(:, 2: 4) = 0;   
+for i=1: length(BUS(: , 1)) 
+    for k=1:length(bus_temp)
         if nodenum(k , 2) == i
             tempbus(i, :) = bus_temp(k,:);
         end
@@ -127,11 +128,9 @@ V = [];
 for i = 1: length(tempbus(: , 1))
     V(i) = tempbus(i,2);
 end
-
 tempbus(1,4)*10000;
 
 V = [tempbus(1,4),tempbus(1,5),V];
-
 for i=1: nl
     for k=1:2
         if branchS(i,k)~=0

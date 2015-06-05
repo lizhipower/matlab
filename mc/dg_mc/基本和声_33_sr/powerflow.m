@@ -1,4 +1,4 @@
-function [DS,V, flow] = powerflow(bus_temp,OP)
+function [DS,V, flow , T] = powerflow(bus_temp,OP)
 global bus branch
 BUS = bus;
 BRANCH = branch;
@@ -32,6 +32,7 @@ for i = 1 : length(branch_temp(: ,1 ))
         ii = ii + 1;
     end
 end
+% pause
 branch_temp = branch_new;
 
 [bus_temp,branch_temp,nodenum] = reordering(bus_temp,branch_temp);
