@@ -2,7 +2,7 @@
 global bus branch
 testof119();
 bus_temp = bus;
-Vamplitude=zeros(1,125);
+% Vamplitude=zeros(1,125);
 Eploss=0;
 Network = zeros(1,length(branch(: , 1)));
 H_M = zeros(1,15);

@@ -13,6 +13,7 @@ for i = 1:length(branch_temp(:, 1))
 end
 branch_temp = branch_new;
 
+
 T = formT(bus_temp, branch_temp);
 isolated = findIsolated(T);
 ii = 1;
