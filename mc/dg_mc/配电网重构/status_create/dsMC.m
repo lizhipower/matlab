@@ -1,9 +1,7 @@
 %% statusMC: function description
 function[loadRslt] = dsMC(OP, bus)
-    disp('re create');
-    yearLoop = 500;
-
-    
+    disp('re1111 create');
+    yearLoop = 100;
         OPlength = length(OP);
         statusOP = zeros(1, OPlength);
         zeroPosition = find(OP == 0);
@@ -14,9 +12,6 @@ function[loadRslt] = dsMC(OP, bus)
         busPLoad = bus(: , 4);
         busQLoad = bus(: , 5);
 
-
-
-         %delete the info of closed line
         tempOP = OP;
         tempOP(tempOP==0)=[];
 
@@ -34,12 +29,12 @@ function[loadRslt] = dsMC(OP, bus)
         beta_QLOAD = zeros(1, yearLoop);
 
         timecost = zeros(1, yearLoop);
-
+        111
         for  k = 1 : yearLoop
             % % tic;
             % if mod(k, yearLoop/10) == 0
-            %     disp('loading...');
-            %     disp(k/yearLoop);
+                disp('mc calculating...');
+                disp(k/yearLoop);
             % end
              %change the status of the open line by MC
             [ t_system , status_system ] = dsMCyear(tempOP);

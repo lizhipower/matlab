@@ -1,6 +1,5 @@
 
-
-%Newton-Raphson迭代(脚本)
+%Newton-Raphsonµü´ú(½Å±¾)
 %% output:tempbus branch_temp Sij Sji DS flow 
 %%
 [deltaPQ,Jac,iP,iQ]=DPQ_jac(bus_temp,Ybus);
@@ -10,26 +9,26 @@ ctaU=[cta;U];
 G=real(Ybus);
 B=imag(Ybus);
 multiplierU=[ones(iP,1);U];
-pre=1.0e-10;%精度
-kmax=10;%迭代最大次数
-%outputY;%输出节点导纳矩阵
-%% 迭代过程
+pre=1.0e-10;%¾«¶È
+kmax=10;%µü´ú×î´ó´ÎÊý
+%outputY;%Êä³ö½Úµãµ¼ÄÉ¾ØÕó
+%% µü´ú¹ý³Ì
 for iloop=1:kmax
     if(max(abs(deltaPQ))<pre)
         break
     end
     DctaU=Jac\deltaPQ;
-    DctaU=DctaU.*multiplierU;   %因为模左除后得到的是ΔU/U，所以要乘上乘子U
+    DctaU=DctaU.*multiplierU;   %ÒòÎªÄ£×ó³ýºóµÃµ½µÄÊÇ¦¤U/U£¬ËùÒÔÒª³ËÉÏ³Ë×ÓU
     ctaU=ctaU-DctaU;
     cta=ctaU(1:iP);
     U=ctaU(iP+1:iP+iQ);
-    multiplierU=[ones(iP,1);U]; %Δδ部分不变，所以乘上1
+    multiplierU=[ones(iP,1);U]; %¦¤¦Ä²¿·Ö²»±ä£¬ËùÒÔ³ËÉÏ1
     bus_temp(1:iP,3)=cta;
     bus_temp(1:iQ,2)=U;
-   % output_iterate;%输出迭代过程中的相关数据
+   % output_iterate;%Êä³öµü´ú¹ý³ÌÖÐµÄÏà¹ØÊý¾Ý
     [deltaPQ,Jac,iP,iQ]=DPQ_jac(bus_temp,Ybus);
 end
-%% 下面求PV节点的无功注入和SW节点的有功和无功注入
+%% ÏÂÃæÇóPV½ÚµãµÄÎÞ¹¦×¢ÈëºÍSW½ÚµãµÄÓÐ¹¦ºÍÎÞ¹¦×¢Èë
 cta=bus_temp(:,3);
 U=bus_temp(:,2);
 PVQ=0;
@@ -44,7 +43,7 @@ for i=1:nb
             PVQ=PVQ+U(i)*U(jl)*(G(i,jl)*sin(cta(i)-cta(jl))-...
                 B(i,jl)*cos(cta(i)-cta(jl)));
         end
-        bus_temp(i,5)=PVQ;   %求出各PV节点无功功率
+        bus_temp(i,5)=PVQ;   %Çó³ö¸÷PV½ÚµãÎÞ¹¦¹¦ÂÊ
     end
 end
 for jl=1:nb
@@ -54,10 +53,10 @@ for jl=1:nb
                 B(nb,jl)*cos(cta(nb)-cta(jl)));
 end
 bus_temp(nb,4)=SWP;
-bus_temp(nb,5)=SWQ;    %求出SW节点无功和有功功率
-%至此，求出了每个节点上的电压幅值，相角，节点注入有功和无功
+bus_temp(nb,5)=SWQ;    %Çó³öSW½ÚµãÎÞ¹¦ºÍÓÐ¹¦¹¦ÂÊ
+%ÖÁ´Ë£¬Çó³öÁËÃ¿¸ö½ÚµãÉÏµÄµçÑ¹·ùÖµ£¬Ïà½Ç£¬½Úµã×¢ÈëÓÐ¹¦ºÍÎÞ¹¦
 %%
-%下面求线路潮流和损耗
+%ÏÂÃæÇóÏßÂ·³±Á÷ºÍËðºÄ
 V=U.*cos(cta)+j.*U.*sin(cta);
 S=zeros(nl,3);
 Sij=S(:,1);
@@ -66,33 +65,40 @@ DSij=S(:,3);
 DS = 0;
 for i=1:nl
     li=branch_temp(i,1);
+    li =find(bus_temp(:, 1) == li);
+
     lj=branch_temp(i,2);
+    lj =find(bus_temp(:, 1) == lj);
+
     K=branch_temp(i,7);
     Zt=branch_temp(i,3)+j*branch_temp(i,4);
     if li~=0&lj~=0
         Yt=1/Zt;
     end
     Ym=branch_temp(i,5)+j*branch_temp(i,6);
-    if li~=0&lj~=0&K==0    %普通线路
+    if li~=0&lj~=0&K==0    %ÆÕÍ¨ÏßÂ·
         Iij=V(li)*(Yt+Ym)-V(lj)*Yt;
         Iji=V(lj)*(Ym+Yt)-V(li)*Yt;
         Sij(i)=V(li)*conj(Iij);
         Sji(i)=V(lj)*conj(Iji);
         DSij(i)=Sij(i)+Sji(i);
-    elseif li~=0&lj~=0&K>0 %变压器线路K在j侧
+    elseif li~=0&lj~=0&K>0 %±äÑ¹Æ÷ÏßÂ·KÔÚj²à
         Iij=V(li)*(Ym+Yt)-V(lj)*(Yt/K);
         Iji=V(lj)*(Yt/(K^2))-V(li)*(Yt/K);
         Sij(i)=V(li)*conj(Iij);
         Sji(i)=V(lj)*conj(Iji);
         DSij(i)=Sij(i)+Sji(i);
-    elseif li~=0&lj~=0&K<0 %变压器线路K在i侧
+    elseif li~=0&lj~=0&K<0 %±äÑ¹Æ÷ÏßÂ·KÔÚi²à
         Iij=V(li)*(Ym+Yt)-V(lj)*(Yt*K);
         Iji=V(lj)*(Yt*K^2)-V(li)*(Yt*K);
         Sij(i)=V(li)*conj(Iij);
         Sji(i)=V(lj)*conj(Iji);
         DSij(i)=Sij(i)+Sji(i);
-    else        %接地线路
+    else        %½ÓµØÏßÂ·
         Iij=V(li)*Ym;
+        V(li)
+        conj(Iij)
+
         Sij(i)=V(li)*conj(Iij);
         Sji(i)=0;
         DSij(i)=Sij(i)+Sji(i);
@@ -104,35 +110,45 @@ DS=DS*10000;
 branchS=[branch_temp,S];
 
 %% -----------------------------------------------------------
-%下面把节点顺序还原为原来的状态
-for i=1:nb
-    for k=1:nb
-        if nodenum(k,2)==i
-            tempbus(i,:)=bus_temp(k,:);
+%ÏÂÃæ°Ñ½ÚµãË³Ðò»¹Ô­ÎªÔ­À´µÄ×´Ì¬
+tempbus = [];
+
+    tempbus = BUS;
+    tempbus(:, 2: 4) = 0;   
+for i=1: length(BUS(: , 1)) 
+    for k=1:length(bus_temp)
+        if nodenum(k , 2) == i
+            tempbus(i, :) = bus_temp(k,:);
         end
     end
 end
-tempbus(:,3)=tempbus(:,3).*(180/pi);    %变换为角度
-tempbus(:,1)=[1:nb]';
+tempbus(:,3)=tempbus(:,3).*(180/pi);
+tempbus(:,1)=[1: length(BUS(: ,1))]';
 V = [];
-for i = 1:nb
+for i = 1: length(tempbus(: , 1))
     V(i) = tempbus(i,2);
 end
 tempbus(1,4)*10000;
-V = [tempbus(1,4),tempbus(1,5),V];
 
-for i=1:nl
+V = [tempbus(1,4),tempbus(1,5),V];
+for i=1: nl
     for k=1:2
         if branchS(i,k)~=0
             branchS(i,k)=nodenum(branchS(i,k),2);
         end
     end
 end
-branch_temp=branchS(:,1:7);
-flow=[branchS(:,1),branchS(:,2),branchS(:,8:10)];
+branch_temp = BRANCH;
+for i = 1 : length(BRANCH)
+    flow(i, :) = [BRANCH(i, 1), BRANCH(i, 2), [0 0 0]];
+    for k = 1 : length(branchS(: ,1))
+        if (BRANCH(i, 1) == branchS(k,1)) & (BRANCH(i, 2) == branchS(k,2) )
+            flow(i, :)=[branchS(k,1),branchS(k,2),branchS(k,8:10)];
+        end
+    end
+end
 
-
-%% 寻找Capacitor和ESS的接入位置
+%% Ñ°ÕÒCapacitorºÍESSµÄ½ÓÈëÎ»ÖÃ
 %LSF_P = zeros(1,33);
 %LSF_Q = zeros(1,33);
 %Ploss = zeros(1,32);
