@@ -1,9 +1,10 @@
 %% statusMC: function description
 function[loadRslt] = dsMC(OP, bus, branch)
+    tic
     bus_temp = bus;
     branch_temp = branch;
     disp('dsMC');
-    yearLoop = 100;
+    yearLoop = 500;
 
     OPlength = length(OP);
     statusOP = zeros(1, OPlength);
@@ -34,10 +35,10 @@ function[loadRslt] = dsMC(OP, bus, branch)
 
     for  k = 1 : yearLoop
         % % tic;
-        % if mod(k, yearLoop/10) == 0
+        if mod(k, yearLoop/10) == 0
             disp('loading...');
             disp(k/yearLoop);
-        % end
+        end
          %change the status of the open line by MC
         [ t_system , status_system ] = dsMCyear(tempOP);
         loopLength = length(t_system);
@@ -67,22 +68,35 @@ function[loadRslt] = dsMC(OP, bus, branch)
                 end
              end
              % cal the NRloop of the OP
-             [DS, V] = powerflow(bus, statusOP);
+             % [DS, V] = powerflow(bus, statusOP);
 
-            %  ii = 1;
-            %  for i = 1:length(branch_temp(:, 1))
-            %       if OP(i) == 1
-            %         branch_new(ii, :) = branch_temp(i, :);
-            %         ii = ii + 1;
-            %     end
-            % end
-            % branch_temp = branch_new;
-            % T = formT(bus_temp, branch_temp);
+             ii = 1;
+             bus_temp = bus;
+             branch_temp = branch;
+             branch_new = [];
+
             % statusOP
-            % isolated = findIsolated(T)
+            % pause
+             for i = 1:length(branch_temp(:, 1))
+                  if statusOP(i) == 1
+                    branch_new(ii, :) = branch_temp(i, :);
+                    ii = ii + 1;
+                end
+            end
+            branch_temp = branch_new;
+            T = formT(bus_temp, branch_temp);
+            % find(statusOP == 0)
+
+            isolated = findIsolated(T);
+            % pause
+             errorLoadNum = zeros(1, length(bus(:, 1)));
+
+            for opindex = 1 : length(isolated)
+                errorLoadNum(isolated(opindex)) = 1;
+            end
              % check the V of OP to find the error load num
-             statusV = V(1 , 3:end);
-             errorLoadNum = statusV > 1.1 * standardLoad;
+             % statusV = V(1 , 3:end);
+             % errorLoadNum = statusV > 1.1 * standardLoad
              % pause
 
              %sum the load of all the error num load

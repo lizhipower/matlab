@@ -14,12 +14,12 @@ function [children] = getChildrenLoop(T, nodeNum)
     for i = nodeNum + 1 : length( T(1, :))
         if T(nodeNum, i) ~= 0
                 children = [children,  i];
-            if checkRootPoint(T, i) == 1
+            if T(i+1 : end, i) == 1
                 break
             else
                 children = [children, getChildrenLoop(T, i)];
             end
-        end         
+        end
     end
 end
 

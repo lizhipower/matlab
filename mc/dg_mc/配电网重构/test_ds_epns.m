@@ -37,5 +37,8 @@ for i = 1 : length(hf(:, 1))
     for j = 1 : length(hf(i, :))
         op(hf(i, j)) = 0;
     end
-    loadRslt = [loadRslt dsMC(op, bus, branch)];
+    loadRslt = [loadRslt dsMC(op, bus, branch)]
 end
+loadRslt = loadRslt';
+stem(ds, loadRslt)
+
