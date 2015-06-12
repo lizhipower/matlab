@@ -4,7 +4,7 @@ function[loadRslt] = dsMC(OP, bus, branch)
     bus_temp = bus;
     branch_temp = branch;
     disp('dsMC');
-    yearLoop = 500;
+    yearLoop = 100;
 
     OPlength = length(OP);
     statusOP = zeros(1, OPlength);
@@ -35,10 +35,10 @@ function[loadRslt] = dsMC(OP, bus, branch)
 
     for  k = 1 : yearLoop
         % % tic;
-        if mod(k, yearLoop/10) == 0
-            disp('loading...');
-            disp(k/yearLoop);
-        end
+        % if mod(k, yearLoop/10) == 0
+        %     disp('loading...');
+        %     disp(k/yearLoop);
+        % end
          %change the status of the open line by MC
         [ t_system , status_system ] = dsMCyear(tempOP);
         loopLength = length(t_system);

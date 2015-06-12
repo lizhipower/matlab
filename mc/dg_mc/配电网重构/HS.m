@@ -59,7 +59,7 @@ for Itr = 1: firstLoop
     New_MCrslt = real(loadRslt);
     New_V = V;
     [WorstFit,WorstLoc] = max(HF(: , 1));
-    if New_HF(1,1) < 145 & New_HF(1,1) > 140
+    if New_HF(1,1) < 190 & New_HF(1,1) > 180
         NewHarmony
         New_HF
         min(New_V(3: end))
