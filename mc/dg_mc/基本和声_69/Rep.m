@@ -35,7 +35,7 @@ for iter = 1:N
         end
         i = i+1;
     end
- 
+
     st = 0;
     for i = 1:length(A)
        if OP(A(i)) == 1
@@ -47,7 +47,7 @@ for iter = 1:N
     while(st == 1)&&j
         if OP(A(j)) == 1
             ssb = 1;
-            for i = 1:length(B)    
+            for i = 1:length(B)
 
                 if B(i) == branch(A(j),1)
                     ssb = 0;
@@ -90,7 +90,7 @@ if (length(B)~=69)||(length(F)~=68)
     OP = ones(1, LN);
     OP(69:end) = 0;
 end
-        
-    
-            
+
+
+
 

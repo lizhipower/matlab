@@ -144,12 +144,12 @@ y5 = round5(ceil(x));
 duan_kai(5) = y5;
 INIT(y5) = 0;
 
-            
-            
-            
-        
-        
-   
+
+
+
+
+
+
 
 
 

@@ -15,7 +15,7 @@ HMCR_min = 0.65;
 PAR_max = 0.55;   %Òôµ÷Î¢µ÷¸ÅÂÊ»ò¾Ö²¿ÈÅ¶¯¸ÅÂÊ
 PAR_min = 0.25;
 bw = 1;
-MaxItr = 2000;
+MaxItr = 300;
 [nb,mb] = size(bus);
 
 %% ³õÊ¼»¯
@@ -55,9 +55,9 @@ for Itr = 1:MaxItr
     % while ( sum(M < 1) < length(M) )
         GenerateNewHarmony;
         [DS,V] = powerflow(bus_temp,New_OPL);
-        % sum(M < 1) 
+        % sum(M < 1)
     % end
-    
+
     New_HF = real(DS);
 
     New_V = V;

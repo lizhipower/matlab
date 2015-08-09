@@ -1,6 +1,6 @@
 
 %Newton-Raphsonµü´ú(½Å±¾)
-%% output:tempbus branch_temp Sij Sji DS flow 
+%% output:tempbus branch_temp Sij Sji DS flow
 %%
 [deltaPQ,Jac,iP,iQ]=DPQ_jac(bus_temp,Ybus);
 cta=bus_temp(1:iP,3);
@@ -127,11 +127,11 @@ for i=1:nl
         end
     end
 end
-% branch_temp=branchS(:,1:7);
-branch_temp=branchS(:,1:8);
+branch_temp=branchS(:,1:7);
+% branch_temp=branchS(:,1:8);
 
-% flow=[branchS(:,1),branchS(:,2),branchS(:,8:10)];
-flow=[branchS(:,1),branchS(:,2),branchS(:,9:11)];
+flow=[branchS(:,1),branchS(:,2),branchS(:,8:10)];
+% flow=[branchS(:,1),branchS(:,2),branchS(:,9:11)];
 % M =  abs(branchS(:,9) ./ branchS (:, 8)) *10000;
 
 %% Ñ°ÕÒCapacitorºÍESSµÄ½ÓÈëÎ»ÖÃ

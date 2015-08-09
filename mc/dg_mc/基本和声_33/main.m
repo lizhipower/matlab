@@ -1,5 +1,6 @@
-% function main()
+clear;
 global bus branch
+tic
 testof33();
 bus_temp = bus;
 Vamplitude=zeros(1,35);
@@ -12,7 +13,4 @@ Eploss = minPloss
 Network = Network_structure
 H_M = BestHM
 
-
-    
-
-% end
+toc

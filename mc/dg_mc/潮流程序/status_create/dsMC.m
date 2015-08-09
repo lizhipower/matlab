@@ -54,13 +54,10 @@ function[loadRslt cdfPLoad] = dsMC(OP, bus)
 
             for j = 1 : loopLength - 1
                  tempOP = status_system(:, j)';
-
-
                  %add the info of closed line back to the OP
                  zeroPositionIndex = 1;
                  tempOPIndex = 1;
                  for i = 1 : OPlength
-                    % i
                      if i ==  zeroPosition(zeroPositionIndex)
                          statusOP(i) = 0;
                          zeroPositionIndex = zeroPositionIndex + 1;
@@ -78,7 +75,6 @@ function[loadRslt cdfPLoad] = dsMC(OP, bus)
 
 
                  % cal the NRloop of the OP
-
                  [DS, V] = powerflow(bus, statusOP);
 
                  % check the V of OP to find the error load num
@@ -118,9 +114,9 @@ function[loadRslt cdfPLoad] = dsMC(OP, bus)
                 % else
                 %     cdfPLoad(1, 7) = cdfPLoad(1,7) + 1;
                 % end
-                        
 
-                    
+
+
 
 
 
